@@ -1,0 +1,12 @@
+[project]
+name = "llm-citation-machine"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "baml-py>=0.214.0",
+    "langchain>=1.1.0",
+    "langchain-ollama>=1.0.0",
+    "trafilatura>=2.0.0",
+]
