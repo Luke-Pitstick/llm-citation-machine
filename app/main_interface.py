@@ -14,14 +14,14 @@ def create_gemini_client():
 
     try:
         b.client_registry.add_llm_client(
-            name='CustomGemini',
+            name='UserGemini',
             provider='google-ai',
             options={
                 "model": "gemini-2.5-flash",
                 "api_key": gemini_key
             }
         )
-        b.client_registry.set_primary('CustomGemini')
+        b.client_registry.set_primary('UserGemini')
     except Exception as e:
         # Fallback if accessing client_registry directly fails in your specific version
         print(f"Could not update registry directly: {e}")
