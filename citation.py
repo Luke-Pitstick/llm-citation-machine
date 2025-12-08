@@ -1,4 +1,3 @@
-import json
 import datetime
 from dotenv import load_dotenv
 
@@ -59,87 +58,98 @@ def extract_citation_info(cite_url, date_accessed: datetime.date):
     
     return b.ExtractCitationInfo(website=website, access_date=access_date)
 
-
 def generate_mla_citation(url: str):
     info = extract_citation_info(url, datetime.date.today())
     print(info)
     
-    citation = ""    
-    for i in range(len(info.authors)):
-        name = ""
+    citation = ""
+    name = ""
+    author = info.authors[0]
+    name += f"{author.last_name}, "
+    
+    
+    for first_name in author.first_name.split(" "):
+        name += f"{first_name} "
+    name = name.strip()
+        
+    
+    citation += f"{name}"
+    
+    for i in range(1, len(info.authors)):
         author = info.authors[i]
-        name += author.last_name + ", "
         
-        for first_name in author.first_name.split(" "):
-            name += first_name + " "
-        name = name.strip()
-            
+        name = f", {author.first_name} {author.last_name}"
         
-        citation += name + ", "
+        if i < len(info.authors) - 1 and len(info.authors) == 2:
+            citation += ", and "
         
         if len(info.authors) >= 3:
-            citation += "et al."
+            citation += ", et al."
             break
         
 
-    citation += ' "' + info.article_title + '."'
+    citation += f' "{info.article_title}."'
     citation += " *"
-    citation += info.website_title + "*" +","
+    citation += f"{info.publication_title}*" +","
     
     if info.volume:
-        citation += " vol. " + info.volume + ","
+        citation += f" vol. {info.volume},"
         
     if info.issue:
-        citation += " no. " + info.issue + ","
+        citation += f" no. {info.issue},"
         
-    citation += " " + info.publication_date.year + ","
-    
-    if info.page_range:
-        citation += " pp. " + info.page_range + ","
+    citation += f" {info.publication_date.year},"
     
     
+    citation += f" pp. {info.page_range},"
+
     if info.doi:
-        citation += " doi:https://doi.org/" + info.doi + "."
+        citation += f" DOI https://doi.org/{info.doi}."
     return citation, info
-    
+
 
 def generate_apa_citation(url: str):
     info = extract_citation_info(url, datetime.date.today())
-    print(info)
-    
-    citation = ""
+    #KazimE., &KoshiyamaA.S., &. (2021).A high-level overview of AI ethics.Patterns, 2(9), 100314.https://doi.org/10.1016/j.patter.2021.100314
+
+    citation = ""    
     for i in range(len(info.authors)):
-        name = ""
-        author = info.authors[i]
-        name += author.last_name + ", "
-        for first_name in author.first_name.split(" "):
-            name += first_name + " "
-        name = name.strip()
-        citation += name + ", "
+        if i == (len(info.authors) - 1):
+            print("last author")
+            citation += "& "
         
-        if len(info.authors) >= 3:
-            citation += "et al."
-            break
-
-    citation += ' "' + info.article_title + '."'
-    citation += " *"
-    citation += info.website_title + "*" +","
+        citation += f"{info.authors[i].last_name}, "
+        for first_name in info.authors[i].first_name.split(" "):
+            citation += f"{first_name[0].strip()}. "
+            
+        citation += ", "
+        
+        
+    # Kazim, E., & Koshiyama, A. S. (2021). A high-level overview of AI ethics. Patterns, 2(9), 100314. https://doi.org/10.1016/j.patter.2021.100314
+    citation = citation.strip()
+    citation = citation[0:-2]
+    citation += f" ({info.publication_date.year}). "
+    citation += f"{info.article_title}. "
+    citation += f"*{info.publication_title}*, *{info.volume}*({info.issue}), "
+    if "-" not in info.page_range: 
+        citation += f"Article {info.page_range}. " 
+    else:
+        citation += f"{info.page_range}. "
+    citation += f"https://doi.org/{info.doi}"
     
-    if info.volume:
-        citation += " vol. " + info.volume + ","
-        
-
-    if info.issue:
-        citation += " no. " + info.issue + ","
-        
-    citation += " " + info.publication_date.year + ","
-    
-    if info.page_range:
-        citation += " pp. " + info.page_range + ","
-
-    if info.doi:
-        citation += " doi:https://doi.org/" + info.doi + "."
     return citation, info
+
+def generate_citations(urls: list[str], style: str):
+    citations = []
+    info_list = []
+    for url in urls:
+        if style == "MLA":
+            citation, info = generate_mla_citation(url)
+        elif style == "APA":
+            citation, info = generate_apa_citation(url)
+        citations.append(citation)
+        info_list.append(info)
+    return citations, info_list
 
 if __name__ == "__main__":
     test_url = "https://onlinelibrary.wiley.com/doi/full/10.1002/fsn3.362"

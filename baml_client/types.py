@@ -53,7 +53,7 @@ class CitationInfo(BaseModel):
     authors: typing.List["Author"]
     url: str
     article_title: str
-    website_title: str
+    publication_title: str
     publication_date: "Date"
     access_date: "Date"
     volume: typing.Optional[str] = None

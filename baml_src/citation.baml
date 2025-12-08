@@ -15,7 +15,7 @@ class CitationInfo {
     authors Author[]
     url string
     article_title string
-    website_title string @description("The title of the journal or website")
+    publication_title string @description("The title of the journal or website")
     publication_date Date
     access_date Date
     volume string? @description("The volume of the journal or website")

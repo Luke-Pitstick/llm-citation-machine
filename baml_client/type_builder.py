@@ -112,7 +112,7 @@ class CitationInfoAst:
     def __init__(self, tb: type_builder.TypeBuilder):
         _tb = tb._tb # type: ignore (we know how to use this private attribute)
         self._bldr = _tb.class_("CitationInfo")
-        self._properties: typing.Set[str] = set([  "authors",  "url",  "article_title",  "website_title",  "publication_date",  "access_date",  "volume",  "issue",  "page_range",  "doi",  ])
+        self._properties: typing.Set[str] = set([  "authors",  "url",  "article_title",  "publication_title",  "publication_date",  "access_date",  "volume",  "issue",  "page_range",  "doi",  ])
         self._props = CitationInfoProperties(self._bldr, self._properties)
 
     def type(self) -> baml_py.FieldType:
@@ -153,8 +153,8 @@ class CitationInfoProperties:
         return type_builder.ClassPropertyViewer(self.__bldr.property("article_title"))
     
     @property
-    def website_title(self) -> type_builder.ClassPropertyViewer:
-        return type_builder.ClassPropertyViewer(self.__bldr.property("website_title"))
+    def publication_title(self) -> type_builder.ClassPropertyViewer:
+        return type_builder.ClassPropertyViewer(self.__bldr.property("publication_title"))
     
     @property
     def publication_date(self) -> type_builder.ClassPropertyViewer:
