@@ -12,7 +12,8 @@ def run(urls: list[str], citation_style: str):
             "api_key": st.session_state["gemini_key"]
         }
     )
-    generate_citations(urls, citation_style)
+    registry.set_primary('UserGemini')
+    citations, info_list = generate_citations(urls, citation_style)
     return citations, info_list
 
 st.set_page_config(page_title="Citation Generator", page_icon="📚")
