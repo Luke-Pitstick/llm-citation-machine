@@ -1,8 +1,17 @@
 import streamlit as st
 import subprocess
+import sys
 
-subprocess.run(["playwright", "install"])
-subprocess.run(["playwright", "install-deps"])
+@st.cache_resource
+def install_playwright_browser():
+    try:
+        subprocess.check_call([sys.executable, "-m", "playwright", "install", "chromium"])
+        print("Playwright browser installed successfully.")
+    except subprocess.CalledProcessError as e:
+        print(f"Error installing Playwright browser: {e}")
+
+install_playwright_browser()
+
 
 main_interface_page = st.Page(str("main_interface.py"), title="Main interface", icon=":material/add_circle:")
 settings_page = st.Page(str("settings.py"), title="Settings", icon=":material/settings:")
