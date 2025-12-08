@@ -4,7 +4,7 @@ from citation import generate_citations
 st.set_page_config(page_title="Citation Generator", page_icon="📚")
 
 st.title("Citation Generator")
-st.write("Generate accurate MLA and APA citations from any website URL using AI.")
+st.write("Generate accurate MLA and APA citations from any article URL using AI.")
 
 # Create a clean layout with columns
 col1, col2 = st.columns([3, 1])
