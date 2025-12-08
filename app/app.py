@@ -1,6 +1,10 @@
 import streamlit as st
 import subprocess
 import sys
+import os
+
+if "GOOGLE_API_KEY" not in os.environ:
+    os.environ["GOOGLE_API_KEY"] = "dummy_value_for_baml_init"
 
 @st.cache_resource
 def install_playwright_browser():

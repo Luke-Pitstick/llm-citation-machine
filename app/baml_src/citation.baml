@@ -33,7 +33,6 @@ class Website {
 
 function ExtractCitationInfo(website: Website, access_date: Date) -> CitationInfo {
     client CustomGemini
-
     prompt #"
         Extract info from this website for citation purposes. Keep the full name of each authors.
         Additonally do NOT use the references or works cited sections to extract info ONLY the actual article.
@@ -60,7 +59,6 @@ function ExtractCitationInfo(website: Website, access_date: Date) -> CitationInf
 
 function GenerateMLACitation(citation_info: CitationInfo) -> string {
     client CustomGemini
-
     prompt #"
         Generate an MLA website citation with the citation info provided. Respond with only the citation and nothing else.
         The url needs to be italicized
