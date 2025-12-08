@@ -110,7 +110,6 @@ def generate_mla_citation(url: str):
 
 def generate_apa_citation(url: str):
     info = extract_citation_info(url, datetime.date.today())
-    #KazimE., &KoshiyamaA.S., &. (2021).A high-level overview of AI ethics.Patterns, 2(9), 100314.https://doi.org/10.1016/j.patter.2021.100314
 
     citation = ""    
     for i in range(len(info.authors)):
@@ -124,8 +123,7 @@ def generate_apa_citation(url: str):
             
         citation += ", "
         
-        
-    # Kazim, E., & Koshiyama, A. S. (2021). A high-level overview of AI ethics. Patterns, 2(9), 100314. https://doi.org/10.1016/j.patter.2021.100314
+    
     citation = citation.strip()
     citation = citation[0:-2]
     citation += f" ({info.publication_date.year}). "
