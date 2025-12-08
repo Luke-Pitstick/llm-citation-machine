@@ -73,7 +73,4 @@ if st.button("Generate Citation", type="primary") and gemini_key != "":
             except Exception as e:
                 st.error(f"Error: {str(e)}")
 else:
-    if gemini_key == "":
-        st.error("Please enter your Gemini API key in the settings page to generate citations.")
-    else:
-        st.error("Please enter some URLs first.")
+    st.error("Please enter your Gemini API key in the settings page to generate citations.")
