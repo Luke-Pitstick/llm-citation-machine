@@ -4,18 +4,6 @@ from pathlib import Path
 
 from baml_py import ClientRegistry
 
-from src.install_browserforge import install_browserforge
-
-
-# Set BrowserForge data directory before import
-os.environ["BROWSERFORGE_DATA_DIR"] = "/tmp/browserforge_data"
-Path("/tmp/browserforge_data").mkdir(parents=True, exist_ok=True)
-
-
-#install_browserforge()
-
-from src.citation import generate_citations
-
 
 
 st.set_page_config(page_title="Citation Generator", page_icon="📚")

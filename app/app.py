@@ -1,9 +1,7 @@
 import streamlit as st
 import subprocess
 import sys
-from apify_fingerprint_datapoints import get_fingerprint_network
-from browserforge import BrowserForge
-from src.install_browserforge import install_browserforge
+from src.install_deps import install_camoufox
 
 @st.cache_resource
 def install_playwright_browser():
@@ -14,8 +12,8 @@ def install_playwright_browser():
         print(f"Error installing Playwright browser: {e}")
 
 
-install_playwright_browser()
-install_browserforge()
+#install_playwright_browser()
+install_camoufox()
 
 main_interface_page = st.Page(str("main_interface.py"), title="Main interface", icon=":material/add_circle:")
 settings_page = st.Page(str("settings.py"), title="Settings", icon=":material/settings:")
