@@ -32,11 +32,17 @@ with col1:
 
 with col2:
     citation_style = st.selectbox("Style", ["MLA", "APA"])
+
+
+gemini_key = st.session_state.get("gemini_key")
     
     
-if st.button("Generate Citation", type="primary") and st.session_state.get("gemini_key") != "":
+if st.button("Generate Citation", type="primary"):
     if not urls:
         st.error("Please enter some URLs first.")
+    if gemini_key == "":
+        st.error("Please enter your Gemini API key in the settings page to generate citations.")
+        
     else:
         with st.spinner("Generating citations..."):
             try:    
