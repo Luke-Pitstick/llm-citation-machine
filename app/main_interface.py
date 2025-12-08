@@ -6,7 +6,8 @@ from baml_py import ClientRegistry
 st.set_page_config(page_title="Citation Generator", page_icon="📚")
 
 st.title("Citation Generator")
-st.write("Generate accurate MLA and APA citations from any article URL using Gemini and BAML.")
+st.write("Generate accurate MLA and APA citations from any article URL using Gemini and BAML.  \
+         If the html can't be extracted put in any citation info you can find and it will generate the citation for you.")
 
 st.divider()
 

@@ -52,9 +52,9 @@ class Author(BaseModel):
 class CitationInfo(BaseModel):
     authors: typing.List["Author"]
     url: str
-    article_title: str
-    publication_title: str
-    publication_date: "Date"
+    article_title: typing.Optional[str] = None
+    publication_title: typing.Optional[str] = None
+    publication_date: typing.Optional["Date"] = None
     access_date: "Date"
     volume: typing.Optional[str] = None
     issue: typing.Optional[str] = None
@@ -62,9 +62,9 @@ class CitationInfo(BaseModel):
     doi: typing.Optional[str] = None
 
 class Date(BaseModel):
-    day: str
-    month: str
-    year: str
+    day: typing.Optional[str] = None
+    month: typing.Optional[str] = None
+    year: typing.Optional[str] = None
 
 class Website(BaseModel):
     url: str

@@ -2,8 +2,8 @@ import datetime
 from dotenv import load_dotenv
 
 
-from trafilatura import html2txt
-from playwright.sync_api import sync_playwright
+from trafilatura import extract, html2txt
+from camoufox import Camoufox
 
 
 from baml_client.types import Website, Date, CitationInfo
@@ -17,19 +17,13 @@ CitationInfo.model_rebuild()
 
 
 def get_page(url: str):
-    with sync_playwright() as p:
-        browser = p.chromium.launch(headless=True)  # headless=False helps pass bot checks
-        context = browser.new_context(  # this enables cookies & JS automatically
-            user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
-                       "(KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
-        )
-        page = context.new_page()
-
-        # Load page (don’t block early)
-        page.goto(url, wait_until="domcontentloaded")
-
+    with Camoufox(headless=True) as browser:
+        page = browser.new_page()
+        
+        page.goto(url, wait_until="networkidle")
+        page.wait_for_timeout(5000)
+        
         content = page.content()
-        browser.close()
         return content
 
 
@@ -49,7 +43,7 @@ def extract_citation_info(cite_url, date_accessed: datetime.date, registry: Clie
     
     text = get_page(cite_url)
     text = html2txt(text)
-    text = split_text(text, 6000)[0]
+    #text = split_text(text, 15000)[0]
     
     if text is None:
         raise ValueError(f"Failed to extract content from {cite_url}")
@@ -124,7 +118,14 @@ def generate_apa_citation(info: CitationInfo):
     citation = citation[0:-2]
     citation += f" ({info.publication_date.year}). "
     citation += f"{info.article_title}. "
-    citation += f"*{info.publication_title}*, *{info.volume}*({info.issue}), "
+    citation += f"*{info.publication_title}*, "
+    if info.volume:
+        citation += f"*{info.volume}*"
+    if info.issue:
+        citation += f"({info.issue}), "
+    else:
+        citation += ", "
+    
     if "-" not in info.page_range: 
         citation += f"Article {info.page_range}. " 
     else:

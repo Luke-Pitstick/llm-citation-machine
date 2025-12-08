@@ -1,7 +1,7 @@
 class Date {
-    day string
-    month string
-    year string
+    day string?
+    month string?
+    year string?
 }
     
 class Author {
@@ -14,9 +14,9 @@ class Author {
 class CitationInfo {
     authors Author[]
     url string
-    article_title string
-    publication_title string @description("The title of the journal or website")
-    publication_date Date
+    article_title string?
+    publication_title string? @description("The title of the journal or website")
+    publication_date Date?
     access_date Date
     volume string? @description("The volume of the journal or website")
     issue string? @description("The issue of the journal or website")
