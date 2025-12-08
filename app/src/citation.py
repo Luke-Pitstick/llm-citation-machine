@@ -59,10 +59,7 @@ def extract_citation_info(cite_url, date_accessed: datetime.date, registry: Clie
     
     return b.ExtractCitationInfo(website=website, access_date=access_date, baml_options={"client_registry": registry})
 
-def generate_mla_citation(url: str, registry: ClientRegistry):
-    info = extract_citation_info(url, datetime.date.today(), registry)
-    print(info)
-    
+def generate_mla_citation(info: CitationInfo):
     citation = ""
     name = ""
     author = info.authors[0]
@@ -109,9 +106,7 @@ def generate_mla_citation(url: str, registry: ClientRegistry):
     return citation, info
 
 
-def generate_apa_citation(url: str, registry: ClientRegistry):
-    info = extract_citation_info(url, datetime.date.today(), registry)
-
+def generate_apa_citation(info: CitationInfo):
     citation = ""    
     for i in range(len(info.authors)):
         if i == (len(info.authors) - 1):
@@ -139,14 +134,14 @@ def generate_apa_citation(url: str, registry: ClientRegistry):
     return citation, info
 
 def generate_citations(urls: list[str], style: str, registry: ClientRegistry):
-    
     citations = []
     info_list = []
     for url in urls:
+        citation_info = extract_citation_info(url, datetime.date.today(), registry)
         if style == "MLA":
-            citation, info = generate_mla_citation(url, registry)
+            citation, info = generate_mla_citation(citation_info)
         elif style == "APA":
-            citation, info = generate_apa_citation(url, registry)
+            citation, info = generate_apa_citation(citation_info)
         citations.append(citation)
         info_list.append(info)
     return citations, info_list
