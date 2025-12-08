@@ -2,7 +2,7 @@ import streamlit as st
 import subprocess
 
 subprocess.run(["playwright", "install"])
-subprocess.run(["sudo", "playwright", "install-deps"])
+subprocess.run(["playwright", "install-deps"])
 
 main_interface_page = st.Page(str("main_interface.py"), title="Main interface", icon=":material/add_circle:")
 settings_page = st.Page(str("settings.py"), title="Settings", icon=":material/settings:")
