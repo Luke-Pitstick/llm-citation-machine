@@ -34,13 +34,12 @@ with col2:
     citation_style = st.selectbox("Style", ["MLA", "APA"])
     
     
-if st.button("Generate Citation", type="primary"):
-
+if st.button("Generate Citation", type="primary") and "gemini_key" in st.session_state:
     if not urls:
         st.error("Please enter some URLs first.")
     else:
         with st.spinner("Generating citations..."):
-            try:
+            try:    
                 registry = ClientRegistry()
                 registry.add_llm_client(
                     name='CustomGemini',
@@ -70,3 +69,5 @@ if st.button("Generate Citation", type="primary"):
                         st.json(info.model_dump())
             except Exception as e:
                 st.error(f"Error: {str(e)}")
+else:
+    st.error("Please enter your Gemini API key in the settings page to generate citations.")
