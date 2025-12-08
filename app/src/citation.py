@@ -142,7 +142,7 @@ def generate_citations(urls: list[str], style: str):
     info_list = []
     for url in urls:
         if style == "MLA":
-            citation, info = generate_mla_citation(url)
+            citation, info = generate_mla_citation(url)``
         elif style == "APA":
             citation, info = generate_apa_citation(url)
         citations.append(citation)
