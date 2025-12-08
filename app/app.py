@@ -13,6 +13,7 @@ def install_playwright_browser():
 
 install_playwright_browser()
 
+st.session_state["gemini_key"] = ""
 
 main_interface_page = st.Page(str("main_interface.py"), title="Main interface", icon=":material/add_circle:")
 settings_page = st.Page(str("settings.py"), title="Settings", icon=":material/settings:")
