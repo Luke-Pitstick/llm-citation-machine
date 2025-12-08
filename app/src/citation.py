@@ -60,7 +60,7 @@ def extract_citation_info(cite_url, date_accessed: datetime.date, registry: Clie
     return b.ExtractCitationInfo(website=website, access_date=access_date, baml_options={"client_registry": registry})
 
 def generate_mla_citation(url: str, registry: ClientRegistry):
-    info = extract_citation_info(url, datetime.date.today())
+    info = extract_citation_info(url, datetime.date.today(), registry)
     print(info)
     
     citation = ""
