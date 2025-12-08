@@ -1,8 +1,8 @@
 import datetime
-from dotenv import load_dotenv
 
 
-from trafilatura import extract, html2txt
+
+from trafilatura import html2txt
 from camoufox import Camoufox
 
 
@@ -11,7 +11,6 @@ from baml_client import b
 
 from baml_py import ClientRegistry
 
-# Rebuild models to resolve forward references (Date is defined after CitationInfo alphabetically)
 CitationInfo.model_rebuild()
 
 
