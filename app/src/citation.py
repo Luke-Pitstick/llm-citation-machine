@@ -9,6 +9,8 @@ from playwright.sync_api import sync_playwright
 from baml_client.types import Website, Date, CitationInfo
 from baml_client import b
 
+from baml_py import ClientRegistry
+
 # Rebuild models to resolve forward references (Date is defined after CitationInfo alphabetically)
 CitationInfo.model_rebuild()
 
@@ -138,7 +140,8 @@ def generate_apa_citation(url: str):
 
 def generate_citations(urls: list[str], style: str, api_key: str):
     if api_key:
-        b.client_registry.add_llm_client(
+        registry = ClientRegistry()
+        registry.add_llm_client(
             name='UserGemini',
             provider='google-ai',
             options={
@@ -146,7 +149,7 @@ def generate_citations(urls: list[str], style: str, api_key: str):
                 "api_key": api_key
             }
         )
-        b.client_registry.set_primary('UserGemini')
+        registry.set_primary('UserGemini')
     citations = []
     info_list = []
     for url in urls:
