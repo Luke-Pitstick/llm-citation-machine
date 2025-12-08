@@ -2,7 +2,7 @@ import streamlit as st
 from src.citation import generate_citations
 from baml_py import ClientRegistry
 
-if "gemini_key" not in st.session_state:
+if st.session_state.get("gemini_key") != "":
     st.session_state["gemini_key"] = ""
     st.rerun()
     
