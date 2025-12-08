@@ -12,7 +12,6 @@ from baml_client import b
 # Rebuild models to resolve forward references (Date is defined after CitationInfo alphabetically)
 CitationInfo.model_rebuild()
 
-load_dotenv()
 
 
 def get_page(url: str):
@@ -137,7 +136,17 @@ def generate_apa_citation(url: str):
     
     return citation, info
 
-def generate_citations(urls: list[str], style: str):
+def generate_citations(urls: list[str], style: str, api_key: str):
+    if api_key:
+        b.client_registry.add_llm_client(
+            name='UserGemini',
+            provider='google-ai',
+            options={
+                "model": "gemini-2.5-flash",
+                "api_key": api_key
+            }
+        )
+        b.client_registry.set_primary('UserGemini')
     citations = []
     info_list = []
     for url in urls:
