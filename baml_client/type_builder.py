@@ -20,7 +20,7 @@ from .globals import DO_NOT_USE_DIRECTLY_UNLESS_YOU_KNOW_WHAT_YOURE_DOING_RUNTIM
 class TypeBuilder(type_builder.TypeBuilder):
     def __init__(self):
         super().__init__(classes=set(
-          ["CitationInfo","Date","Website",]
+          ["Author","CitationInfo","Date","Website",]
         ), enums=set(
           []
         ), runtime=DO_NOT_USE_DIRECTLY_UNLESS_YOU_KNOW_WHAT_YOURE_DOING_RUNTIME)
@@ -31,8 +31,12 @@ class TypeBuilder(type_builder.TypeBuilder):
 
 
     # #########################################################################
-    # Generated classes 3
+    # Generated classes 4
     # #########################################################################
+
+    @property
+    def Author(self) -> "AuthorViewer":
+        return AuthorViewer(self)
 
     @property
     def CitationInfo(self) -> "CitationInfoViewer":
@@ -54,14 +58,61 @@ class TypeBuilder(type_builder.TypeBuilder):
 
 
 # #########################################################################
-# Generated classes 3
+# Generated classes 4
 # #########################################################################
+
+class AuthorAst:
+    def __init__(self, tb: type_builder.TypeBuilder):
+        _tb = tb._tb # type: ignore (we know how to use this private attribute)
+        self._bldr = _tb.class_("Author")
+        self._properties: typing.Set[str] = set([  "prefix",  "first_name",  "last_name",  ])
+        self._props = AuthorProperties(self._bldr, self._properties)
+
+    def type(self) -> baml_py.FieldType:
+        return self._bldr.field()
+
+    @property
+    def props(self) -> "AuthorProperties":
+        return self._props
+
+
+class AuthorViewer(AuthorAst):
+    def __init__(self, tb: type_builder.TypeBuilder):
+        super().__init__(tb)
+
+    
+    def list_properties(self) -> typing.List[typing.Tuple[str, type_builder.ClassPropertyViewer]]:
+        return [(name, type_builder.ClassPropertyViewer(self._bldr.property(name))) for name in self._properties]
+    
+
+
+class AuthorProperties:
+    def __init__(self, bldr: baml_py.ClassBuilder, properties: typing.Set[str]):
+        self.__bldr = bldr
+        self.__properties = properties # type: ignore (we know how to use this private attribute) # noqa: F821
+
+    
+    
+    @property
+    def prefix(self) -> type_builder.ClassPropertyViewer:
+        return type_builder.ClassPropertyViewer(self.__bldr.property("prefix"))
+    
+    @property
+    def first_name(self) -> type_builder.ClassPropertyViewer:
+        return type_builder.ClassPropertyViewer(self.__bldr.property("first_name"))
+    
+    @property
+    def last_name(self) -> type_builder.ClassPropertyViewer:
+        return type_builder.ClassPropertyViewer(self.__bldr.property("last_name"))
+    
+    
+
 
 class CitationInfoAst:
     def __init__(self, tb: type_builder.TypeBuilder):
         _tb = tb._tb # type: ignore (we know how to use this private attribute)
         self._bldr = _tb.class_("CitationInfo")
-        self._properties: typing.Set[str] = set([  "authors",  "url",  "title",  "publication_date",  "access_date",  "doi",  ])
+        self._properties: typing.Set[str] = set([  "authors",  "url",  "article_title",  "website_title",  "publication_date",  "access_date",  "volume",  "issue",  "page_range",  "doi",  ])
         self._props = CitationInfoProperties(self._bldr, self._properties)
 
     def type(self) -> baml_py.FieldType:
@@ -98,8 +149,12 @@ class CitationInfoProperties:
         return type_builder.ClassPropertyViewer(self.__bldr.property("url"))
     
     @property
-    def title(self) -> type_builder.ClassPropertyViewer:
-        return type_builder.ClassPropertyViewer(self.__bldr.property("title"))
+    def article_title(self) -> type_builder.ClassPropertyViewer:
+        return type_builder.ClassPropertyViewer(self.__bldr.property("article_title"))
+    
+    @property
+    def website_title(self) -> type_builder.ClassPropertyViewer:
+        return type_builder.ClassPropertyViewer(self.__bldr.property("website_title"))
     
     @property
     def publication_date(self) -> type_builder.ClassPropertyViewer:
@@ -108,6 +163,18 @@ class CitationInfoProperties:
     @property
     def access_date(self) -> type_builder.ClassPropertyViewer:
         return type_builder.ClassPropertyViewer(self.__bldr.property("access_date"))
+    
+    @property
+    def volume(self) -> type_builder.ClassPropertyViewer:
+        return type_builder.ClassPropertyViewer(self.__bldr.property("volume"))
+    
+    @property
+    def issue(self) -> type_builder.ClassPropertyViewer:
+        return type_builder.ClassPropertyViewer(self.__bldr.property("issue"))
+    
+    @property
+    def page_range(self) -> type_builder.ClassPropertyViewer:
+        return type_builder.ClassPropertyViewer(self.__bldr.property("page_range"))
     
     @property
     def doi(self) -> type_builder.ClassPropertyViewer:

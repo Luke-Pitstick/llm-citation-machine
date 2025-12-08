@@ -1,16 +1,26 @@
 class Date {
-    day int
-    month int
-    year int
+    day string
+    month string
+    year string
+}
+    
+class Author {
+    prefix string? @description("The title or preffix of the others name eg. Md., Dr., Mr., Ms., etc. Only include if it is not the default.")
+    first_name string
+    last_name string
 }
 
 
 class CitationInfo {
-    authors string[]
+    authors Author[]
     url string
-    title string
+    article_title string
+    website_title string @description("The title of the journal or website")
     publication_date Date
     access_date Date
+    volume string? @description("The volume of the journal or website")
+    issue string? @description("The issue of the journal or website")
+    page_range string? @description("The page range of the journal or website")
     doi string?
 }
 
@@ -22,10 +32,11 @@ class Website {
 
 
 function ExtractCitationInfo(website: Website, access_date: Date) -> CitationInfo {
-    client CustomGemma
+    client CustomGemini
 
     prompt #"
-        Extract info from this website for citation purposes.
+        Extract info from this website for citation purposes. Keep the full name of each authors.
+        Additonally do NOT use the references or works cited sections to extract info ONLY the actual article.
 
         Website Content:
         ---
@@ -48,7 +59,7 @@ function ExtractCitationInfo(website: Website, access_date: Date) -> CitationInf
 } 
 
 function GenerateMLACitation(citation_info: CitationInfo) -> string {
-    client CustomOllama
+    client CustomGemini
 
     prompt #"
         Generate an MLA website citation with the citation info provided. Respond with only the citation and nothing else.
@@ -88,7 +99,17 @@ test generate_mla_citation_test {
 
     args {
         citation_info {
-            authors ["Luke Pitstick, Michael Phelps"]
+            authors [
+                {
+                    first_name "Luke"
+                    last_name "Pitstick"
+                    prefix "Dr."
+                },
+                {
+                    first_name "Michael"
+                    last_name "Phelps"
+                }
+            ]
             title "Why Luke Smells"
             url "lukepitstick.com"
             publication_date {

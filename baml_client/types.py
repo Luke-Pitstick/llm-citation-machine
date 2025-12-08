@@ -41,21 +41,30 @@ def all_succeeded(checks: typing.Dict[CheckName, Check]) -> bool:
 # #########################################################################
 
 # #########################################################################
-# Generated classes (3)
+# Generated classes (4)
 # #########################################################################
 
+class Author(BaseModel):
+    prefix: typing.Optional[str] = None
+    first_name: str
+    last_name: str
+
 class CitationInfo(BaseModel):
-    authors: typing.List[str]
+    authors: typing.List["Author"]
     url: str
-    title: str
+    article_title: str
+    website_title: str
     publication_date: "Date"
     access_date: "Date"
+    volume: typing.Optional[str] = None
+    issue: typing.Optional[str] = None
+    page_range: typing.Optional[str] = None
     doi: typing.Optional[str] = None
 
 class Date(BaseModel):
-    day: int
-    month: int
-    year: int
+    day: str
+    month: str
+    year: str
 
 class Website(BaseModel):
     url: str

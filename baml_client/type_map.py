@@ -16,6 +16,9 @@ from . import stream_types
 
 type_map = {
 
+    "types.Author": types.Author,
+    "stream_types.Author": stream_types.Author,
+
     "types.CitationInfo": types.CitationInfo,
     "stream_types.CitationInfo": stream_types.CitationInfo,
 

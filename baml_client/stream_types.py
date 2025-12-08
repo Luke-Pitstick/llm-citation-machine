@@ -23,21 +23,30 @@ class StreamState(BaseModel, typing.Generic[StreamStateValueT]):
     value: StreamStateValueT
     state: typing_extensions.Literal["Pending", "Incomplete", "Complete"]
 # #########################################################################
-# Generated classes (3)
+# Generated classes (4)
 # #########################################################################
 
+class Author(BaseModel):
+    prefix: typing.Optional[str] = None
+    first_name: typing.Optional[str] = None
+    last_name: typing.Optional[str] = None
+
 class CitationInfo(BaseModel):
-    authors: typing.List[str]
+    authors: typing.List["Author"]
     url: typing.Optional[str] = None
-    title: typing.Optional[str] = None
+    article_title: typing.Optional[str] = None
+    website_title: typing.Optional[str] = None
     publication_date: typing.Optional["Date"] = None
     access_date: typing.Optional["Date"] = None
+    volume: typing.Optional[str] = None
+    issue: typing.Optional[str] = None
+    page_range: typing.Optional[str] = None
     doi: typing.Optional[str] = None
 
 class Date(BaseModel):
-    day: typing.Optional[int] = None
-    month: typing.Optional[int] = None
-    year: typing.Optional[int] = None
+    day: typing.Optional[str] = None
+    month: typing.Optional[str] = None
+    year: typing.Optional[str] = None
 
 class Website(BaseModel):
     url: typing.Optional[str] = None
