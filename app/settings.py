@@ -1,5 +1,6 @@
 import streamlit as st
 from baml_py import ClientRegistry
+from baml_client import b
 
 
 st.title("Settings")
@@ -21,6 +22,7 @@ if st.button("Save"):
         }
     )
     registry.set_primary('UserGemini')
+    b.set_client_registry(registry)
     st.success("Settings saved")
 
         
