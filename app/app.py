@@ -1,7 +1,7 @@
 import streamlit as st
 import subprocess
 import sys
-
+from src.install_browserforge import install_browserforge
 
 @st.cache_resource
 def install_playwright_browser():
@@ -10,8 +10,16 @@ def install_playwright_browser():
         print("Playwright browser installed successfully.")
     except subprocess.CalledProcessError as e:
         print(f"Error installing Playwright browser: {e}")
+@st.cache_resource
+def install_browserforge_wrapper():
+    try:
+        install_browserforge()
+        print("BrowserForge installed successfully.")
+    except Exception as e:
+        print(f"Error installing BrowserForge: {e}")
 
 install_playwright_browser()
+install_browserforge_wrapper()
 
 
 main_interface_page = st.Page(str("main_interface.py"), title="Main interface", icon=":material/add_circle:")

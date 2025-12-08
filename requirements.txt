@@ -29,10 +29,12 @@ botocore
 botocore-stubs
 bs4
 build
+browserforge
 CacheControl
 cachetools
 certifi
 cffi
+camoufox
 charset-normalizer
 chromadb
 click

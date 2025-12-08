@@ -1,6 +1,15 @@
 import streamlit as st
-from src.citation import generate_citations
+import os
+from pathlib import Path
+
 from baml_py import ClientRegistry
+
+# Set BrowserForge data directory before import
+os.environ["BROWSERFORGE_DATA_DIR"] = "/tmp/browserforge_data"
+Path("/tmp/browserforge_data").mkdir(parents=True, exist_ok=True)
+
+from src.citation import generate_citations
+
 
 
 st.set_page_config(page_title="Citation Generator", page_icon="📚")
