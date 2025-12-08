@@ -1,22 +1,30 @@
 import streamlit as st
 from src.citation import generate_citations
 from baml_py import ClientRegistry
+from baml_client import b
 
 
 def create_gemini_client():
-    registry = ClientRegistry()
     try: 
         gemini_key = st.session_state["gemini_key"]
     except KeyError:
         st.error("Gemini API key not found. Please set it in the settings.")
         st.stop()
 
-    registry.add_llm_client(name='UserGemini', provider='google-ai', options={
-            "model": "gemini-2.5-flash",
-            "api_key": gemini_key
-        })
 
-    registry.set_primary('UserGemini')
+    try:
+        b.client_registry.add_llm_client(
+            name='CustomGemini',
+            provider='google-ai',
+            options={
+                "model": "gemini-2.5-flash",
+                "api_key": gemini_key
+            }
+        )
+        b.client_registry.set_primary('CustomGemini')
+    except Exception as e:
+        # Fallback if accessing client_registry directly fails in your specific version
+        print(f"Could not update registry directly: {e}")
     
 
 st.set_page_config(page_title="Citation Generator", page_icon="📚")
@@ -40,6 +48,7 @@ with col2:
     citation_style = st.selectbox("Style", ["MLA", "APA"])
     
 create_gemini_client()
+
     
 if st.button("Generate Citation", type="primary"):
 
