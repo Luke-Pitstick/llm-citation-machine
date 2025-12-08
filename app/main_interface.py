@@ -39,8 +39,10 @@ with col1:
 with col2:
     citation_style = st.selectbox("Style", ["MLA", "APA"])
     
+create_gemini_client()
+    
 if st.button("Generate Citation", type="primary"):
-    create_gemini_client()
+
     if not urls:
         st.error("Please enter some URLs first.")
     else:
