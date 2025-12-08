@@ -7,7 +7,7 @@ def install_camoufox():
         subprocess.run(["uv", "sync"])
         subprocess.run(["uv", "add", "pydantic"])
         subprocess.run(["pip", "install", "pydantic"])
-        subprocess.run(["pip", "install", "camoufox"])
+        #subprocess.run(["pip", "install", "camoufox"])
         subprocess.run(["pip", "-m", "camoufox", "fetch"])
         
         print("Dependencies installed successfully.")
