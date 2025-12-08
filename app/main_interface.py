@@ -15,9 +15,7 @@ col1, col2 = st.columns([3, 1])
 
 with col1:
     urls = st.text_area("Website URLs", placeholder="https://example.com").split("\n")
-    for url in urls:
-        if url == "":
-            urls.remove(url)
+    urls = [url.strip() for url in urls if url.strip()]
 
 with col2:
     citation_style = st.selectbox("Style", ["MLA", "APA"])
@@ -26,8 +24,10 @@ with col2:
 gemini_key = st.session_state.get("gemini_key")
 
     
-if st.button("Generate Citation", type="primary") and gemini_key != "":
-    if not urls:
+if st.button("Generate Citation", type="primary"):
+    if not gemini_key:
+        st.error("Please enter your Gemini API key in the settings page to generate citations.")
+    elif not urls:
         st.error("Please enter some URLs first.")
     else:
         with st.spinner("Generating citations..."):
@@ -38,7 +38,7 @@ if st.button("Generate Citation", type="primary") and gemini_key != "":
                     provider='google-ai',
                     options={
                         "model": "gemini-2.5-flash",
-                        "api_key": st.session_state.get("gemini_key")
+                        "api_key": gemini_key
                     }
                 )
                 citations, info_list = generate_citations(urls, citation_style, registry)
@@ -61,5 +61,3 @@ if st.button("Generate Citation", type="primary") and gemini_key != "":
                         st.json(info.model_dump())
             except Exception as e:
                 st.error(f"Error: {str(e)}")
-else:
-    st.error("Please enter your Gemini API key in the settings page to generate citations.")
