@@ -2,6 +2,9 @@
 
 An AI-powered citation generator that automatically extracts metadata from websites and generates accurate MLA and APA citations using Google Gemini.
 
+## Live Version
+[https://llm-citation-machine.streamlit.app/](https://llm-citation-machine.streamlit.app/)
+
 ## Features
 
 - 🤖 **AI-Powered Extraction**: Uses Google Gemini to intelligently extract citation metadata from web pages
