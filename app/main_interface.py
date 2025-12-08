@@ -41,7 +41,7 @@ if st.button("Generate Citation", type="primary"):
     else:
         with st.spinner("Generating citations..."):
             try:
-                citations, info_list = generate_citations(urls, citation_style)
+                citations, info_list = generate_citations(urls, citation_style, st.session_state["registry"])
                 
                 
                 # Display the result
