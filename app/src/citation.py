@@ -138,7 +138,7 @@ def generate_apa_citation(url: str):
     
     return citation, info
 
-def generate_citations(urls: list[str], style: str, api_key: str):
+def generate_citations(urls: list[str], style: str):
     citations = []
     info_list = []
     for url in urls:

@@ -22,7 +22,6 @@ if st.button("Save"):
         }
     )
     registry.set_primary('UserGemini')
-    st.write(registry)
     st.success("Settings saved")
 
         

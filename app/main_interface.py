@@ -1,6 +1,19 @@
 import streamlit as st
 from src.citation import generate_citations
+from baml_py import ClientRegistry
     
+async def run(urls: list[str], citation_style: str):
+    registry = ClientRegistry()
+    registry.add_llm_client(
+        name='UserGemini',
+        provider='google-ai',
+        options={
+            "model": "gemini-2.5-flash",
+            "api_key": st.session_state["gemini_key"]
+        }
+    )
+    generate_citations(urls, citation_style)
+    return citations, info_list
 
 st.set_page_config(page_title="Citation Generator", page_icon="📚")
 
@@ -29,9 +42,7 @@ if st.button("Generate Citation", type="primary"):
     else:
         with st.spinner("Generating citations..."):
             try:
-                
-                api_key = st.session_state["gemini_key"]
-                citations, info_list = generate_citations(urls, citation_style, api_key)
+                citations, info_list = run(urls, citation_style)
                 
                 
                 # Display the result
