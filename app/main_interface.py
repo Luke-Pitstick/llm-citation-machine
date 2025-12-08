@@ -34,7 +34,7 @@ with col2:
     citation_style = st.selectbox("Style", ["MLA", "APA"])
     
     
-if st.button("Generate Citation", type="primary") and "gemini_key" in st.session_state:
+if st.button("Generate Citation", type="primary") and st.session_state.get("gemini_key") != "":
     if not urls:
         st.error("Please enter some URLs first.")
     else:
