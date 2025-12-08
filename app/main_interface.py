@@ -37,12 +37,9 @@ with col2:
 gemini_key = st.session_state.get("gemini_key")
     
     
-if st.button("Generate Citation", type="primary"):
+if st.button("Generate Citation", type="primary") and gemini_key != "":
     if not urls:
         st.error("Please enter some URLs first.")
-    if gemini_key == "":
-        st.error("Please enter your Gemini API key in the settings page to generate citations.")
-        
     else:
         with st.spinner("Generating citations..."):
             try:    
@@ -76,4 +73,7 @@ if st.button("Generate Citation", type="primary"):
             except Exception as e:
                 st.error(f"Error: {str(e)}")
 else:
-    st.error("Please enter your Gemini API key in the settings page to generate citations.")
+    if gemini_key == "":
+        st.error("Please enter your Gemini API key in the settings page to generate citations.")
+    else:
+        st.error("Please enter some URLs first.")
