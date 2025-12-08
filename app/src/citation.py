@@ -139,17 +139,6 @@ def generate_apa_citation(url: str):
     return citation, info
 
 def generate_citations(urls: list[str], style: str, api_key: str):
-    if api_key:
-        registry = ClientRegistry()
-        registry.add_llm_client(
-            name='UserGemini',
-            provider='google-ai',
-            options={
-                "model": "gemini-2.5-flash",
-                "api_key": api_key
-            }
-        )
-        registry.set_primary('UserGemini')
     citations = []
     info_list = []
     for url in urls:

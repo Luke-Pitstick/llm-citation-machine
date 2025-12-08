@@ -1,9 +1,8 @@
 import streamlit as st
-
+from src.citation import generate_citations
     
 
 st.set_page_config(page_title="Citation Generator", page_icon="📚")
-
 
 st.title("Citation Generator")
 st.write("Generate accurate MLA and APA citations from any article URL using AI.")
@@ -30,8 +29,6 @@ if st.button("Generate Citation", type="primary"):
     else:
         with st.spinner("Generating citations..."):
             try:
-                # Import here to ensure client is configured and env vars are set
-                from src.citation import generate_citations
                 
                 api_key = st.session_state["gemini_key"]
                 citations, info_list = generate_citations(urls, citation_style, api_key)
