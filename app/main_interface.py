@@ -41,7 +41,16 @@ if st.button("Generate Citation", type="primary"):
     else:
         with st.spinner("Generating citations..."):
             try:
-                citations, info_list = generate_citations(urls, citation_style, st.session_state["registry"])
+                registry = ClientRegistry()
+                registry.add_llm_client(
+                    name='CustomGemini',
+                    provider='google-ai',
+                    options={
+                        "model": "gemini-2.5-flash",
+                        "api_key": st.session_state.get("gemini_key")
+                    }
+                )
+                citations, info_list = generate_citations(urls, citation_style, registry)
                 
                 
                 # Display the result

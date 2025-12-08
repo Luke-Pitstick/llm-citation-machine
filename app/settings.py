@@ -12,16 +12,6 @@ gemini_key = st.text_input("Gemini API Key", type="password", value=st.session_s
 
 if st.button("Save"):
     st.session_state["gemini_key"] = gemini_key
-    registry = ClientRegistry()
-    registry.add_llm_client(
-        name='UserGemini',
-        provider='google-ai',
-        options={
-            "model": "gemini-2.5-flash",
-            "api_key": gemini_key
-        }
-    )
-    registry.set_primary('UserGemini')
     st.success("Settings saved")
 
         
