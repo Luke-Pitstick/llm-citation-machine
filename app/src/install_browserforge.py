@@ -7,8 +7,8 @@ import streamlit as st
 @st.cache_resource
 def install_browserforge():
     # Set custom data directory
-    DATA_DIR = Path("/tmp/browserforge_data")
-    DATA_DIR.mkdir(parents=True, exist_ok=True)
+    # DATA_DIR = Path("/tmp/browserforge_data")
+    # DATA_DIR.mkdir(parents=True, exist_ok=True)
 
     # The data files are now in a separate PyPI package
     # But if you need to download them manually, use the raw GitHub URLs
@@ -25,7 +25,7 @@ def install_browserforge():
         print("Need to install apify_fingerprint_datapoints")
 
     for filename, url in files.items():
-        filepath = DATA_DIR / filename
+        filepath = filename
         if not filepath.exists():
             print(f"Downloading {filename} from {url}...")
             try:
