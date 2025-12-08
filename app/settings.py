@@ -13,7 +13,6 @@ gemini_key = st.text_input("Gemini API Key", type="password", value=st.session_s
 if st.button("Save"):
     st.session_state["gemini_key"] = gemini_key
     st.success("Settings saved")
-    st.rerun()
 
         
 
