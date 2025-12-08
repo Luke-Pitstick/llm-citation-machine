@@ -19,6 +19,15 @@ wheels = [
 ]
 
 [[package]]
+name = "apify-fingerprint-datapoints"
+version = "0.7.0"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/89/9f/e1449a37c023cc0b934834c5483a6a9eb5d2cada8d213c00d19e8ec965b7/apify_fingerprint_datapoints-0.7.0.tar.gz", hash = "sha256:785fb5c784956354ef950aae334b30b9c841c6203cd821e8e002bbfeed309355", size = 912588, upload-time = "2025-11-01T00:46:31.506Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/1b/5b/eeb1b920e3b17daa1790b4b260476d0d12e2b05ab5dd2019f03671abb986/apify_fingerprint_datapoints-0.7.0-py3-none-any.whl", hash = "sha256:f272aeefd32f2040bb0a0395b1ab2db71a1432a4642784c9b9d62337cb7ff7f4", size = 665800, upload-time = "2025-11-01T00:46:29.784Z" },
+]
+
+[[package]]
 name = "attrs"
 version = "25.4.0"
 source = { registry = "https://pypi.org/simple" }
@@ -372,7 +381,9 @@ name = "llm-citation-machine"
 version = "0.1.0"
 source = { virtual = "." }
 dependencies = [
+    { name = "apify-fingerprint-datapoints" },
     { name = "baml-py" },
+    { name = "browserforge" },
     { name = "camoufox" },
     { name = "dotenv" },
     { name = "playwright" },
@@ -383,7 +394,9 @@ dependencies = [
 
 [package.metadata]
 requires-dist = [
+    { name = "apify-fingerprint-datapoints", specifier = ">=0.7.0" },
     { name = "baml-py", specifier = "==0.214.0" },
+    { name = "browserforge", specifier = ">=1.2.3" },
     { name = "camoufox", specifier = ">=0.4.11" },
     { name = "dotenv", specifier = ">=0.9.9" },
     { name = "playwright", specifier = ">=1.56.0" },

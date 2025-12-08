@@ -1,7 +1,7 @@
 import streamlit as st
 import subprocess
 import sys
-from src.install_browserforge import install_browserforge
+from apify_fingerprint_datapoints import get_fingerprint_network
 
 @st.cache_resource
 def install_playwright_browser():

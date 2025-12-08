@@ -5,7 +5,9 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
+    "apify-fingerprint-datapoints>=0.7.0",
     "baml-py==0.214.0",
+    "browserforge>=1.2.3",
     "camoufox>=0.4.11",
     "dotenv>=0.9.9",
     "playwright>=1.56.0",
