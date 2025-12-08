@@ -2,7 +2,7 @@ import streamlit as st
 from src.citation import generate_citations
 from baml_py import ClientRegistry
     
-async def run(urls: list[str], citation_style: str):
+def run(urls: list[str], citation_style: str):
     registry = ClientRegistry()
     registry.add_llm_client(
         name='UserGemini',
