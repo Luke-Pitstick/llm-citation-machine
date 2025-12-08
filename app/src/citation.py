@@ -42,7 +42,7 @@ def split_text(text: str, max_length: int = 10000):
 
 
 
-def extract_citation_info(cite_url, date_accessed: datetime.date):
+def extract_citation_info(cite_url, date_accessed: datetime.date, registry: ClientRegistry):
     """
     Extract citation info from a website. Uses
     """
@@ -57,9 +57,9 @@ def extract_citation_info(cite_url, date_accessed: datetime.date):
     website = Website(url=cite_url, content=text)
     access_date = Date(day=str(date_accessed.day), month=str(date_accessed.month), year=str(date_accessed.year))
     
-    return b.ExtractCitationInfo(website=website, access_date=access_date)
+    return b.ExtractCitationInfo(website=website, access_date=access_date, baml_options={"client_registry": registry})
 
-def generate_mla_citation(url: str):
+def generate_mla_citation(url: str, registry: ClientRegistry):
     info = extract_citation_info(url, datetime.date.today())
     print(info)
     
@@ -109,8 +109,8 @@ def generate_mla_citation(url: str):
     return citation, info
 
 
-def generate_apa_citation(url: str):
-    info = extract_citation_info(url, datetime.date.today())
+def generate_apa_citation(url: str, registry: ClientRegistry):
+    info = extract_citation_info(url, datetime.date.today(), registry)
 
     citation = ""    
     for i in range(len(info.authors)):
@@ -138,14 +138,15 @@ def generate_apa_citation(url: str):
     
     return citation, info
 
-def generate_citations(urls: list[str], style: str):
+def generate_citations(urls: list[str], style: str, registry: ClientRegistry):
+    
     citations = []
     info_list = []
     for url in urls:
         if style == "MLA":
-            citation, info = generate_mla_citation(url)
+            citation, info = generate_mla_citation(url, registry)
         elif style == "APA":
-            citation, info = generate_apa_citation(url)
+            citation, info = generate_apa_citation(url, registry)
         citations.append(citation)
         info_list.append(info)
     return citations, info_list

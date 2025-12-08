@@ -6,14 +6,13 @@ from baml_py import ClientRegistry
 if "registry" not in st.session_state:
     st.session_state["registry"] = ClientRegistry()
     st.session_state["registry"].add_llm_client(
-        name='UserGemini',
+        name='CustomGemini',
         provider='google-ai',
         options={
             "model": "gemini-2.5-flash",
-            "api_key": st.session_state["gemini_key"]
+            "api_key": st.session_state.get("gemini_key")
         }
     )
-    st.session_state["registry"].set_primary('UserGemini')
     
 st.set_page_config(page_title="Citation Generator", page_icon="📚")
 
