@@ -2,11 +2,11 @@ import datetime
 from dotenv import load_dotenv
 
 
-from trafilatura import fetch_url, extract, html2txt
+from trafilatura import html2txt
 from playwright.sync_api import sync_playwright
 
 
-from baml_client.types import Website, Date, CitationInfo, Author
+from baml_client.types import Website, Date, CitationInfo
 from baml_client import b
 
 # Rebuild models to resolve forward references (Date is defined after CitationInfo alphabetically)

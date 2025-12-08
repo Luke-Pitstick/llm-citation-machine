@@ -1,10 +1,31 @@
 import streamlit as st
-from citation import generate_citations
+from src.citation import generate_citations
+from baml_py import ClientRegistry
+
+
+def create_gemini_client():
+    registry = ClientRegistry()
+    try: 
+        gemini_key = st.session_state["gemini_key"]
+    except KeyError:
+        st.error("Gemini API key not found. Please set it in the settings.")
+        st.stop()
+
+    registry.add_llm_client(name='UserGemini', provider='google-ai', options={
+            "model": "gemini-2.5-flash",
+            "api_key": gemini_key
+        })
+
+    registry.set_primary('UserGemini')
+    
 
 st.set_page_config(page_title="Citation Generator", page_icon="📚")
 
+
 st.title("Citation Generator")
 st.write("Generate accurate MLA and APA citations from any article URL using AI.")
+
+st.divider()
 
 # Create a clean layout with columns
 col1, col2 = st.columns([3, 1])
@@ -19,6 +40,7 @@ with col2:
     citation_style = st.selectbox("Style", ["MLA", "APA"])
     
 if st.button("Generate Citation", type="primary"):
+    create_gemini_client()
     if not urls:
         st.error("Please enter some URLs first.")
     else:

@@ -52,7 +52,7 @@ You can get a Google API key from [Google AI Studio](https://makersuite.google.c
 Launch the Streamlit web interface:
 
 ```bash
-streamlit run interface.py
+streamlit run src/main_interface.py
 ```
 
 The interface will open in your browser at `http://localhost:8501`.
@@ -69,7 +69,7 @@ The interface will open in your browser at `http://localhost:8501`.
 You can also use the citation generator programmatically:
 
 ```python
-from citation import generate_citations
+from src.citation import generate_citations
 
 urls = [
     "https://example.com/article",
@@ -92,7 +92,7 @@ for citation in citations:
 For more control, you can use the individual citation functions:
 
 ```python
-from citation import generate_mla_citation, generate_apa_citation
+from src.citation import generate_mla_citation, generate_apa_citation
 
 # Generate MLA citation
 citation, info = generate_mla_citation("https://example.com/article")
