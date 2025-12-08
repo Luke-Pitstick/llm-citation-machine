@@ -3,6 +3,7 @@
 .env.local
 .env.*.local
 
+
 # Python
 __pycache__/
 *.py[cod]
@@ -96,3 +97,4 @@ logs/
 *.tmp
 *.temp
 .cache/
+.devcontainer/
