@@ -1,7 +1,10 @@
 import streamlit as st
 from src.citation import generate_citations
 from baml_py import ClientRegistry
-    
+
+if "gemini_key" not in st.session_state:
+    st.session_state["gemini_key"] = ""
+    st.rerun()
     
 if "registry" not in st.session_state:
     st.session_state["registry"] = ClientRegistry()
@@ -35,7 +38,7 @@ with col2:
 
 
 gemini_key = st.session_state.get("gemini_key")
-    
+
     
 if st.button("Generate Citation", type="primary") and gemini_key != "":
     if not urls:
