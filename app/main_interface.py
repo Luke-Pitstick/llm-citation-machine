@@ -12,7 +12,7 @@ os.environ["BROWSERFORGE_DATA_DIR"] = "/tmp/browserforge_data"
 Path("/tmp/browserforge_data").mkdir(parents=True, exist_ok=True)
 
 
-install_browserforge()
+#install_browserforge()
 
 from src.citation import generate_citations
 

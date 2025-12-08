@@ -4,6 +4,7 @@ aiohttp
 aiosignal
 altair
 annotated-types
+apify_fingerprint_datapoints
 anyio
 anywidget
 appdirs
