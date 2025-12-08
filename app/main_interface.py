@@ -2,21 +2,7 @@ import streamlit as st
 from src.citation import generate_citations
 from baml_py import ClientRegistry
 
-if st.session_state.get("gemini_key") != "":
-    st.session_state["gemini_key"] = ""
-    st.rerun()
-    
-if "registry" not in st.session_state:
-    st.session_state["registry"] = ClientRegistry()
-    st.session_state["registry"].add_llm_client(
-        name='CustomGemini',
-        provider='google-ai',
-        options={
-            "model": "gemini-2.5-flash",
-            "api_key": st.session_state.get("gemini_key")
-        }
-    )
-    
+
 st.set_page_config(page_title="Citation Generator", page_icon="📚")
 
 st.title("Citation Generator")
