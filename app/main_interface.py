@@ -6,7 +6,7 @@ from baml_py import ClientRegistry
 st.set_page_config(page_title="Citation Generator", page_icon="📚")
 
 st.title("Citation Generator")
-st.write("Generate accurate MLA and APA citations from any article URL using AI.")
+st.write("Generate accurate MLA and APA citations from any article URL using Gemini and BAML.")
 
 st.divider()
 
