@@ -97,4 +97,4 @@ logs/
 *.tmp
 *.temp
 .cache/
-.devcontainer/
+.devcontainer
