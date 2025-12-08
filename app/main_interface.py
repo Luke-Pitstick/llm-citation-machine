@@ -1,9 +1,7 @@
 import streamlit as st
-import os
-from pathlib import Path
 
 from baml_py import ClientRegistry
-
+from src.citation import generate_citations
 
 
 st.set_page_config(page_title="Citation Generator", page_icon="📚")
