@@ -14,6 +14,10 @@ app = FastAPI(title="API for LLM Citation Machine", description="API for LLM Cit
 app.state.limiter = limiter
 app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
+@app.on_event("startup")
+async def startup_event():
+    app.state.browser = await AsyncCamoufox(headless=True).start()
+
 
 @app.get("/")
 @limiter.limit("10/minute")
@@ -22,16 +26,26 @@ def read_root(request: Request):
 
 
 @app.get("/extract-citation-info")
-@limiter.limit("20/minute")
-async def extract_citation_info(request: Request, url: str):
-    async with AsyncCamoufox(headless=True) as browser:
-        page = await browser.new_page()
-        await page.route("**/*", lambda route: route.abort() 
-            if route.request.resource_type in ["image", "stylesheet", "font", "media"]
-            else route.continue_())
-        await page.goto(url, wait_until="networkidle")
-        content = await page.content()
-        text = html2txt(content)
-        text = truncate(text, TRUNCATE_LENGTH)
-        return {"citation_info": text}
+async def extract_citation_info(url: str, request: Request):
+    browser = request.app.state.browser
+    page = await browser.new_page()
+
+    # block unnecessary resources
+    await page.route(
+        "**/*",
+        lambda route: route.abort()
+        if route.request.resource_type in ["image", "stylesheet", "font", "media"]
+        else route.continue_(),
+    )
+
+    await page.goto(url, wait_until="domcontentloaded")
+    content = await page.content()
+
+    text = html2txt(content)
+    text = truncate(text, TRUNCATE_LENGTH)
+
+    await page.close()
+
+    return {"citation_info": text}
+        
 

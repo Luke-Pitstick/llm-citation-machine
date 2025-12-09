@@ -2,33 +2,35 @@ import datetime
 
 from trafilatura import html2txt
 
-from src.baml_client.types import Website, Date, CitationInfo
-from src.baml_client import b
+from baml_client.types import Website, Date, CitationInfo
+from baml_client import b
 from baml_py import ClientRegistry
-import requests
+import httpx
 import timeit
+import asyncio
 
 CitationInfo.model_rebuild()
 
 api_url = "https://citation-api-353156069680.us-central1.run.app"
 
+async def get_page_async(url: str):
+    timeout = httpx.Timeout(30.0)
+    async with httpx.AsyncClient(timeout=timeout) as client:
+        response = await client.get(f"{api_url}/extract-citation-info?url={url}")
+        return response.json()["citation_info"]
+
 def get_page(url: str):
-    response = requests.get(f"{api_url}/extract-citation-info?url={url}")
+    response = httpx.get(f"{api_url}/extract-citation-info?url={url}")
     return response.json()["citation_info"]
 
 
 
-
-
-def extract_citation_info(cite_url, date_accessed: datetime.date, registry: ClientRegistry):
+async def extract_citation_info(cite_url, date_accessed: datetime.date, registry: ClientRegistry):
     """
     Extract citation info from a website. Uses
     """
-    start_time = timeit.default_timer()
-    text = get_page(cite_url)
+    text= await get_page(cite_url)
     text = html2txt(text)
-    end_time = timeit.default_timer()
-    print(f"Time taken to get page content: {end_time - start_time} seconds")
     
     if text is None:
         raise ValueError(f"Failed to extract content from {cite_url}")
@@ -36,11 +38,8 @@ def extract_citation_info(cite_url, date_accessed: datetime.date, registry: Clie
     website = Website(url=cite_url, content=text)
     
     access_date = Date(day=str(date_accessed.day), month=str(date_accessed.month), year=str(date_accessed.year))
-    start_time = timeit.default_timer()
-    output = b.ExtractCitationInfo(website=website, access_date=access_date, baml_options={"client_registry": registry})
-    end_time = timeit.default_timer()
-    print(f"Time taken to extract citation info: {end_time - start_time} seconds")
-    
+    output = await b.ExtractCitationInfo(website=website, access_date=access_date, baml_options={"client_registry": registry})
+
     return output
 
 def generate_mla_citation(info: CitationInfo):
@@ -137,7 +136,11 @@ def generate_citations(urls: list[str], style: str, registry: ClientRegistry):
         info_list.append(info)
     return citations, info_list
 
-if __name__ == "__main__":
-    test_url = "https://onlinelibrary.wiley.com/doi/full/10.1002/fsn3.362"
-    page = get_page(test_url)
+
+async def main():
+    test_url = "https://lukepitstick.com"
+    page = await get_page_async(test_url)
     print(page)
+    
+if __name__ == "__main__":
+    asyncio.run(main())
