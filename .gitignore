@@ -29,11 +29,11 @@ share/python-wheels/
 MANIFEST
 
 # Virtual environments
-.venv
-venv/
-ENV/
-env/
-.ENV
+# .venv
+# venv/
+# ENV/
+# env/
+# .ENV
 
 # IDE and editors
 .cursor/
