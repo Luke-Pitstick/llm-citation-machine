@@ -1,0 +1,3 @@
+libgtk-3-0
+libasound2
+libx11-xcb1
