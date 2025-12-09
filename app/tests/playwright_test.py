@@ -1,5 +1,4 @@
 from playwright.async_api import async_playwright
-from playwright_stealth import Stealth
 from trafilatura import html2txt
 import asyncio
 import random

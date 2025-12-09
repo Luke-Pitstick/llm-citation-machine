@@ -1,5 +1,4 @@
 import streamlit as st
-from baml_py import ClientRegistry
 from baml_client import b
 
 

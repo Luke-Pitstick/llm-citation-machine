@@ -1,17 +1,14 @@
 [project]
-name = "llm-citation-machine"
+name = "app"
 version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
-requires-python = ">=3.13"
+requires-python = ">=3.14"
 dependencies = [
-    "apify-fingerprint-datapoints>=0.7.0",
-    "baml-py==0.214.0",
-    "browserforge>=1.2.3",
+    "baml-py>=0.214.0",
     "camoufox>=0.4.11",
-    "dotenv>=0.9.9",
     "playwright>=1.56.0",
-    "playwright-stealth>=2.0.0",
+    "pydantic>=2.12.5",
     "streamlit>=1.52.1",
     "trafilatura>=2.0.0",
 ]
