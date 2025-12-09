@@ -6,7 +6,6 @@ baml-py
 blinker
 browserforge
 cachetools
-camoufox
 certifi
 charset-normalizer
 click

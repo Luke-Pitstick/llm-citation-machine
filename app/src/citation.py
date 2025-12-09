@@ -11,9 +11,12 @@ CitationInfo.model_rebuild()
 
 api_url = "https://citation-api-353156069680.us-central1.run.app"
 
-async def get_page(url: str):
-    response = await requests.get(f"{api_url}/extract-citation-info?url={url}")
+def get_page(url: str):
+    response = requests.get(f"{api_url}/extract-citation-info?url={url}")
     return response.json()["citation_info"]
+
+
+
 
 
 def extract_citation_info(cite_url, date_accessed: datetime.date, registry: ClientRegistry):
