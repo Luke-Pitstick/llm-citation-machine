@@ -1,5 +1,4 @@
 import streamlit as st
-from baml_client import b
 
 
 st.title("Settings")

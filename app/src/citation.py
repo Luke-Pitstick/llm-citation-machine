@@ -1,21 +1,19 @@
 import datetime
 
 from trafilatura import html2txt
-#from camoufox import Camoufox
 
-from baml_client.types import Website, Date, CitationInfo
-from baml_client import b
+from src.baml_client.types import Website, Date, CitationInfo
+from src.baml_client import b
 from baml_py import ClientRegistry
-
+import requests
 
 CitationInfo.model_rebuild()
 
-
+api_url = "https://citation-api-353156069680.us-central1.run.app"
 
 def get_page(url: str):
-    # TODO: use api for it
-    return
-
+    response = requests.get(f"{api_url}/extract-citation-info?url={url}")
+    return response.json()["citation_info"]
 
 def split_text(text: str, max_length: int = 10000):
     """
@@ -139,7 +137,5 @@ def generate_citations(urls: list[str], style: str, registry: ClientRegistry):
 
 if __name__ == "__main__":
     test_url = "https://onlinelibrary.wiley.com/doi/full/10.1002/fsn3.362"
-    correct_citation = "Mishfa KF, Alim MA, Repon MR, et al. Preparation and characterization of snake plant fiber reinforced composite: A sustainable utilization of biowaste. SPE Polym. 2024; 5(1): 35-44. doi:10.1002/pls2.10108"
-    citation, _ = generate_mla_citation(test_url)
-    print("\n\nCorrect Citation:")
-    print(citation)
+    page = get_page(test_url)
+    print(page)

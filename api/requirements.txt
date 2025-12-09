@@ -1,0 +1,5 @@
+camoufox[geoip]
+fastapi
+uvicorn
+slowapi
+trafilatura
