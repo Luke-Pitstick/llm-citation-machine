@@ -6,7 +6,6 @@ from baml_client.types import Website, Date, CitationInfo
 from baml_client import b
 from baml_py import ClientRegistry
 import httpx
-import timeit
 import asyncio
 
 CitationInfo.model_rebuild()
