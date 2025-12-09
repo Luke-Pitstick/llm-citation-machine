@@ -11,17 +11,9 @@ CitationInfo.model_rebuild()
 
 api_url = "https://citation-api-353156069680.us-central1.run.app"
 
-def get_page(url: str):
-    response = requests.get(f"{api_url}/extract-citation-info?url={url}")
+async def get_page(url: str):
+    response = await requests.get(f"{api_url}/extract-citation-info?url={url}")
     return response.json()["citation_info"]
-
-def split_text(text: str, max_length: int = 10000):
-    """
-    Split text into chunks of a given length. This is used to avoid giving the LLM to many tokens which helps to optimize costs and speed.
-    """
-    return [text[i:i+max_length] for i in range(0, len(text), max_length)]
-
-
 
 
 def extract_citation_info(cite_url, date_accessed: datetime.date, registry: ClientRegistry):
@@ -31,7 +23,6 @@ def extract_citation_info(cite_url, date_accessed: datetime.date, registry: Clie
     
     text = get_page(cite_url)
     text = html2txt(text)
-    #text = split_text(text, 15000)[0]
     
     if text is None:
         raise ValueError(f"Failed to extract content from {cite_url}")

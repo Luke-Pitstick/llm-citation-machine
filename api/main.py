@@ -5,6 +5,9 @@ from fastapi import FastAPI
 from camoufox.async_api import AsyncCamoufox
 from trafilatura import html2txt
 from fastapi import Request
+from utils.truncate import truncate
+
+TRUNCATE_LENGTH = 15000
 
 limiter = Limiter(key_func=get_remote_address)
 app = FastAPI(title="API for LLM Citation Machine", description="API for LLM Citation Machine", version="0.1.0")
@@ -27,5 +30,6 @@ async def extract_citation_info(request: Request, url: str):
         await page.wait_for_timeout(5000)
         content = await page.content()
         text = html2txt(content)
+        text = truncate(text, TRUNCATE_LENGTH)
         return {"citation_info": text}
 
