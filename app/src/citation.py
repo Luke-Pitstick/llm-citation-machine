@@ -12,11 +12,6 @@ CitationInfo.model_rebuild()
 
 api_url = "https://citation-api-353156069680.us-central1.run.app"
 
-async def get_page_async(url: str):
-    timeout = httpx.Timeout(30.0)
-    async with httpx.AsyncClient(timeout=timeout) as client:
-        response = await client.get(f"{api_url}/extract-citation-info?url={url}")
-        return response.json()["citation_info"]
 
 def get_page(url: str):
     response = httpx.get(f"{api_url}/extract-citation-info?url={url}")
@@ -24,11 +19,11 @@ def get_page(url: str):
 
 
 
-async def extract_citation_info(cite_url, date_accessed: datetime.date, registry: ClientRegistry):
+def extract_citation_info(cite_url, date_accessed: datetime.date, registry: ClientRegistry):
     """
     Extract citation info from a website. Uses
     """
-    text= await get_page(cite_url)
+    text= get_page(cite_url)
     text = html2txt(text)
     
     if text is None:
@@ -37,7 +32,7 @@ async def extract_citation_info(cite_url, date_accessed: datetime.date, registry
     website = Website(url=cite_url, content=text)
     
     access_date = Date(day=str(date_accessed.day), month=str(date_accessed.month), year=str(date_accessed.year))
-    output = await b.ExtractCitationInfo(website=website, access_date=access_date, baml_options={"client_registry": registry})
+    output = b.ExtractCitationInfo(website=website, access_date=access_date, baml_options={"client_registry": registry})
 
     return output
 
@@ -138,7 +133,7 @@ def generate_citations(urls: list[str], style: str, registry: ClientRegistry):
 
 async def main():
     test_url = "https://lukepitstick.com"
-    page = await get_page_async(test_url)
+    page = get_page(test_url)
     print(page)
     
 if __name__ == "__main__":

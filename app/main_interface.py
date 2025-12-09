@@ -52,71 +52,25 @@ if st.button("Generate Citation", type="primary"):
                 }
             )
             
-            
-            async def process_urls():
-                tasks = [extract_citation_info(url, citation_style, registry) for url in urls]
-    
-                completed_count = 0
+            try:    
                 
-                for coro in asyncio.as_completed(tasks):
-                    # try:
-                        citation_info = await coro
-                        
-                        if citation_style == "MLA":
-                            citation, info = generate_mla_citation(citation_info)
-                        elif citation_style == "APA":
-                            citation, info = generate_apa_citation(citation_info)
-
-                        with results_container:
-                            st.subheader(f"Citation {completed_count + 1}")
-                            st.markdown(citation)
-                            st.caption("Copy raw markdown:")
-                            st.code(citation, language="markdown")
-                            with st.expander("View Extracted Metadata"):
-                                st.json(info.model_dump())
-                        
-                            completed_count += 1
-                            progress_bar.progress(completed_count / len(urls))
-                            status_text.text(f"Completed {completed_count}/{len(urls)} citations")
-
-                    # except Exception as e:
-                    #     with results_container:
-                    #         st.error(f"Error generating citation: {e}")
-                    #         print(e)
-                    #     completed_count += 1
-                    #     progress_bar.progress(completed_count / len(urls))
-                        
-                status_text.success(f"All {len(urls)} citations generated!")
-            
-            
-            try:
-                asyncio.run(process_urls())
+                citations, info_list = generate_citations(urls, citation_style, registry)
+                
+                
+                # Display the result
+                st.success(f"{len(citations)} citations generated!")
+                
+                for i, (citation, info) in enumerate(zip(citations, info_list)):
+                    st.subheader(f"Citation {i+1}")
+                # Display rendered markdown for visual check
+                    st.markdown(citation)
+                    
+                    # specific copy block
+                    st.caption("Copy raw markdown:")
+                    st.code(citation, language="markdown")
+                    
+                    # Show metadata in an expandable section
+                    with st.expander("View Extracted Metadata"):
+                        st.json(info.model_dump())
             except Exception as e:
                 st.error(f"Error: {str(e)}")
-            
-            
-            
-            
-            
-            # try:    
-                
-            #     citations, info_list = generate_citations(urls, citation_style, registry)
-                
-                
-            #     # Display the result
-            #     st.success(f"{len(citations)} citations generated!")
-                
-            #     for i, (citation, info) in enumerate(zip(citations, info_list)):
-            #         st.subheader(f"Citation {i+1}")
-            #     # Display rendered markdown for visual check
-            #         st.markdown(citation)
-                    
-            #         # specific copy block
-            #         st.caption("Copy raw markdown:")
-            #         st.code(citation, language="markdown")
-                    
-            #         # Show metadata in an expandable section
-            #         with st.expander("View Extracted Metadata"):
-            #             st.json(info.model_dump())
-            # except Exception as e:
-            #     st.error(f"Error: {str(e)}")
