@@ -36,10 +36,6 @@ if st.button("Generate Citation", type="primary"):
         st.error("Please enter some URLs first.")
     else:
         with st.spinner("Generating citations...", show_time=True):
-            progress_bar = st.progress(0)
-            status_text = st.empty()
-            results_container = st.container()
-            
             registry = ClientRegistry()
             registry.add_llm_client(
                 name='CustomGemini',
@@ -50,8 +46,7 @@ if st.button("Generate Citation", type="primary"):
                 }
             )
             
-            try:    
-                
+            try:
                 citations, info_list = generate_citations(urls, citation_style, registry)
                 
                 
