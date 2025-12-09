@@ -1,29 +1,20 @@
 import datetime
 
-
-
 from trafilatura import html2txt
-from camoufox import Camoufox
-
+#from camoufox import Camoufox
 
 from baml_client.types import Website, Date, CitationInfo
 from baml_client import b
-
 from baml_py import ClientRegistry
+
 
 CitationInfo.model_rebuild()
 
 
 
 def get_page(url: str):
-    with Camoufox(headless=True) as browser:
-        page = browser.new_page()
-        
-        page.goto(url, wait_until="networkidle")
-        page.wait_for_timeout(5000)
-        
-        content = page.content()
-        return content
+    # TODO: use api for it
+    return
 
 
 def split_text(text: str, max_length: int = 10000):

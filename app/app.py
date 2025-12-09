@@ -1,7 +1,6 @@
 import streamlit as st
 import subprocess
 import sys
-from src.install_deps import install_camoufox
 
 @st.cache_resource
 def install_playwright_browser():
