@@ -2,8 +2,8 @@ import datetime
 
 from trafilatura import html2txt
 
-from baml_client.types import Website, Date, CitationInfo
-from baml_client import b
+from src.baml_client.types import Website, Date, CitationInfo
+from src.baml_client import b
 from baml_py import ClientRegistry
 import httpx
 import asyncio
