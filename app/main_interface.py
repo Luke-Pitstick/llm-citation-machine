@@ -32,7 +32,7 @@ if st.button("Generate Citation", type="primary"):
     elif not urls:
         st.error("Please enter some URLs first.")
     else:
-        with st.spinner("Generating citations..."):
+        with st.spinner("Generating citations...", show_time=True):
             try:    
                 registry = ClientRegistry()
                 registry.add_llm_client(
