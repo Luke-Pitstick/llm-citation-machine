@@ -6,6 +6,7 @@ from src.baml_client.types import Website, Date, CitationInfo
 from src.baml_client import b
 from baml_py import ClientRegistry
 import requests
+import timeit
 
 CitationInfo.model_rebuild()
 
@@ -23,17 +24,24 @@ def extract_citation_info(cite_url, date_accessed: datetime.date, registry: Clie
     """
     Extract citation info from a website. Uses
     """
-    
+    start_time = timeit.default_timer()
     text = get_page(cite_url)
     text = html2txt(text)
+    end_time = timeit.default_timer()
+    print(f"Time taken to get page content: {end_time - start_time} seconds")
     
     if text is None:
         raise ValueError(f"Failed to extract content from {cite_url}")
     
     website = Website(url=cite_url, content=text)
-    access_date = Date(day=str(date_accessed.day), month=str(date_accessed.month), year=str(date_accessed.year))
     
-    return b.ExtractCitationInfo(website=website, access_date=access_date, baml_options={"client_registry": registry})
+    access_date = Date(day=str(date_accessed.day), month=str(date_accessed.month), year=str(date_accessed.year))
+    start_time = timeit.default_timer()
+    output = b.ExtractCitationInfo(website=website, access_date=access_date, baml_options={"client_registry": registry})
+    end_time = timeit.default_timer()
+    print(f"Time taken to extract citation info: {end_time - start_time} seconds")
+    
+    return output
 
 def generate_mla_citation(info: CitationInfo):
     citation = ""

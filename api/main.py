@@ -26,8 +26,10 @@ def read_root(request: Request):
 async def extract_citation_info(request: Request, url: str):
     async with AsyncCamoufox(headless=True) as browser:
         page = await browser.new_page()
+        await page.route("**/*", lambda route: route.abort() 
+            if route.request.resource_type in ["image", "stylesheet", "font", "media"]
+            else route.continue_())
         await page.goto(url, wait_until="networkidle")
-        await page.wait_for_timeout(5000)
         content = await page.content()
         text = html2txt(content)
         text = truncate(text, TRUNCATE_LENGTH)
